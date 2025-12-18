@@ -1,9 +1,11 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace NexusAPI.Models;
 
 public class Sport : Activity
 {
-    public string? Type { get; set; }
-    public string? Place { get; set; }
-    public int Duration { get; set; }
-    public string? Intensity { get; set; }
+    [Required] public string? Type { get; set; }
+    [Required] public string? Place { get; set; }
+    [Required] public int Duration { get; set; }
+    [Required] public string? Intensity { get; set; }
 }
