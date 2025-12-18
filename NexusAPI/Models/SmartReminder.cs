@@ -9,4 +9,7 @@ public class SmartReminder
     [Required] public DateOnly? TimeAlert { get; set; }
     [Required] public Type? Type { get; set; }
     [Required] public string? Status { get; set; }
+    
+    [Required] public int SessionId { get; set; }
+    [Required] public Session? Session { get; set; }
 }
