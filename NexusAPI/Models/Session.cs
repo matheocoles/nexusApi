@@ -8,4 +8,14 @@ public class Session
     [Required] public DateOnly? DateTimeStart { get; set; }
     [Required] public DateOnly? DateTimeEnd { get; set; }
     [Required] public string? Status { get; set; }
+    
+    [Required] public int ActivityId { get; set; }
+    [Required] public Activity? Activity { get; set; }
+    [Required] public int EventRecurrenceId { get; set; }
+    [Required] public EventRecurrence? EventRecurrence { get; set; }
+    
+    public List<SmartReminder>? SmartReminders { get; set; }
+    
+    
+    
 }
