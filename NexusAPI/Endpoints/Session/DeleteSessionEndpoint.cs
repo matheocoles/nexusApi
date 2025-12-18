@@ -13,7 +13,7 @@ public class DeleteSessionEndpoint(NexusDbContext db) : Endpoint<DeleteSessionRe
 {
     public override void Configure()
     {
-        Delete("/api/sessions{id}", x => new { x.Id });
+        Delete("/sessions{id}", x => new { x.Id });
     }
 
     public override async Task HandleAsync(DeleteSessionRequest req, CancellationToken ct)
