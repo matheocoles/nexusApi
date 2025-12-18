@@ -30,7 +30,7 @@ public class DeleteAchievementEndpoint(NexusDbContext db) : Endpoint<DeleteAchie
             return;
         }
     
-        db.Sessions.Remove(achievementToDelete);
+        db.Achievements.Remove(achievementToDelete);
 
         await db.SaveChangesAsync(ct);
         Console.WriteLine($"Session {req.Id}a été supprimé avec succès.");
