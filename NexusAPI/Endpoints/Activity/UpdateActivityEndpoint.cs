@@ -4,33 +4,32 @@ using NexusAPI.DTO.Activity.Response;
 
 namespace NexusAPI.Endpoints.Activity;
 
-public class CreateActivityEndpoint(NexusDbContext nexusDbContext) : Endpoint<CreateActivityDto, GetActivityDto>
+public class UpdateActivityEndpoint(NexusDbContext nexusDbContext) : Endpoint<UpdateActivityDto, GetActivityDto>
 {
     public override void Configure()
     {
-        Post("/activity");
+        Put("/activity");
         AllowAnonymous();
     }
 
-    public override async Task HandleAsync(CreateActivityDto req, CancellationToken ct)
+    public override async Task HandleAsync(UpdateActivityDto req, CancellationToken ct)
     {
         Models.Activity activity = new()
         {
             Name = req.Name,
-            Description = req.Description,
+            Description = req.Description, 
         };
         
-        nexusDbContext.Activities.Add(activity);
+        nexusDbContext.Activities.Update(activity);
         await nexusDbContext.SaveChangesAsync(ct);
-        
-        Console.WriteLine($"Created activity {activity.Name}");
 
-        GetActivityDto activityDto = new()
+        GetActivityDto response = new()
         {
+            Id = activity.Id,
             Name = activity.Name,
             Description = activity.Description,
         };
         
-        await nexusDbContext.AddAsync(activityDto, ct);
+        await Send.OkAsync(response);
     }
 }
