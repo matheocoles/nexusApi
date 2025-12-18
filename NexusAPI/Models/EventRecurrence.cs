@@ -1,9 +1,12 @@
-﻿namespace NexusAPI.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace NexusAPI.Models;
 
 public class EventRecurrence
 {
-    public Type Type { get; set; }
-    public int Frequency { get; set; }
-    public DateOnly? DateEnd { get; set; }
-    public DayOfWeek? Day { get; set; }
+    [Key] public int Id { get; set; }
+    [Required] public Type Type { get; set; }
+    [Required] public int Frequency { get; set; }
+    [Required] public DateOnly? DateEnd { get; set; }
+    [Required] public DayOfWeek? Day { get; set; }
 }

@@ -1,9 +1,11 @@
-﻿namespace NexusAPI.Models;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace NexusAPI.Models;
 
 public class Session
 {
-    public DateOnly? DateTimeStart { get; set; }
-    public DateOnly? DateTimeEnd { get; set; }
-    public string? Status { get; set; }
-
+    [Key] public int Id { get; set; }
+    [Required] public DateOnly? DateTimeStart { get; set; }
+    [Required] public DateOnly? DateTimeEnd { get; set; }
+    [Required] public string? Status { get; set; }
 }
