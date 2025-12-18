@@ -16,6 +16,7 @@ public class GetSessionEndpoint(NexusDbContext db)
     public override void Configure()
     {
     Get("/sessions/{@id}", x => new { x.Id });
+    AllowAnonymous();
     }
 
     public override async Task HandleAsync(GetSessionRequest req, CancellationToken ct)

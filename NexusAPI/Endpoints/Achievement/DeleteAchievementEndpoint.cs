@@ -15,21 +15,22 @@ public class DeleteAchievementEndpoint(NexusDbContext db) : Endpoint<DeleteAchie
     public override void Configure()
     {
         Delete("achievements{id}", x => new { x.Id });
+        AllowAnonymous();
     }
 
     public override async Task HandleAsync(DeleteAchievementRequest req, CancellationToken ct)
     {
-        var sessionToDelete = await db.Sessions
+        var achievementToDelete = await db.Achievements
             .SingleOrDefaultAsync(p => p.Id == req.Id, ct);
     
-        if (sessionToDelete is null)
+        if (achievementToDelete is null)
         {
-            Console.WriteLine($"Aucun session avec l'ID {req.Id} trouvé.");
+            Console.WriteLine($"Aucun Trophée avec l'ID {req.Id} trouvé.");
             await Send.NotFoundAsync(ct);
             return;
         }
     
-        db.Sessions.Remove(sessionToDelete);
+        db.Sessions.Remove(achievementToDelete);
 
         await db.SaveChangesAsync(ct);
         Console.WriteLine($"Session {req.Id}a été supprimé avec succès.");

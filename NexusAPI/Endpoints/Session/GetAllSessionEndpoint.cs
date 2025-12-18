@@ -10,6 +10,7 @@ public class GetAllSessionEndpoint(NexusDbContext db)
     public override void Configure()
     {
         Get("/sessions");
+        AllowAnonymous();
     }
 
     public override async Task HandleAsync(CancellationToken ct)

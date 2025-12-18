@@ -14,6 +14,7 @@ public class DeleteSessionEndpoint(NexusDbContext db) : Endpoint<DeleteSessionRe
     public override void Configure()
     {
         Delete("/sessions{id}", x => new { x.Id });
+        AllowAnonymous();
     }
 
     public override async Task HandleAsync(DeleteSessionRequest req, CancellationToken ct)

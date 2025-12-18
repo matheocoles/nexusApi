@@ -11,6 +11,7 @@ public class UpdateSessionEndpoint(NexusDbContext db)
     public override void Configure()
     {
         Put("/sessions/{id}");
+        AllowAnonymous();
     }
 
     public override async Task HandleAsync(UpdateSessionDto req, CancellationToken ct)
