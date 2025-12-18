@@ -14,6 +14,7 @@ public class GetActivityEndpoint(NexusDbContext nexusDbContext) :Endpoint<GetAct
     public override void Configure()
     {
         Get("/activity/{@id}", x => new { x.Id });
+        AllowAnonymous();
     }
 
     public override async Task HandleAsync(GetActivityRequest req, CancellationToken ct)
