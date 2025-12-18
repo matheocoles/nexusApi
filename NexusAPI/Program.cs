@@ -1,44 +1,48 @@
-var builder = WebApplication.CreateBuilder(args);
+using FastEndpoints;
+using FastEndpoints.Security;
+using FastEndpoints.Swagger;
+using Microsoft.EntityFrameworkCore;
+using NexusAPI;
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-var app = builder.Build();
+builder.Services
+    .AddAuthenticationJwtBearer(s => s.SigningKey = "ThisIsASuperSecretJwtKeyThatIsAtLeast32CharsLong")
+    .AddAuthentication();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+builder.Services.AddAuthorization();
+
+builder.Services.AddCors(options =>
+    options.AddDefaultPolicy(policyBuilder =>
+        policyBuilder.WithOrigins("http://localhost:4200")
+            .WithMethods("GET", "POST", "PUT", "PATCH", "DELETE")
+            .AllowAnyHeader()
+            .AllowCredentials() 
+    )
+);
+
+builder.Services.AddFastEndpoints().SwaggerDocument(options => 
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    options.ShortSchemaNames = true;
+});
+
+builder.Services.AddDbContext<NexusDbContext>();
+
+WebApplication app = builder.Build();
+
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
+app.UseCors();
 
-app.MapGet("/weatherforecast", () =>
-    {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("GetWeatherForecast")
-    .WithOpenApi();
+app.UseAuthentication();
+
+app.UseAuthorization();
+
+app.UseFastEndpoints(options =>
+{
+    options.Endpoints.RoutePrefix = "API"; 
+    options.Endpoints.ShortNames = true;
+}).UseSwaggerGen();
 
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
