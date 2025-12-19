@@ -8,7 +8,7 @@ public class DeleteEventRecurrenceResponse
     public int Id { get; set; }
 }
 
-public class DeleteActivityEndpoint(NexusDbContext nexusDbContext) : Endpoint<DeleteEventRecurrenceResponse>
+public class DeleteEventRecurrenceEndpoint(NexusDbContext nexusDbContext) : Endpoint<DeleteEventRecurrenceResponse>
 {
     public override void Configure()
     {
