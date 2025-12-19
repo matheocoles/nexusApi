@@ -14,7 +14,7 @@ public class DeleteSmartReminderEndpoint(NexusDbContext db)
 {
     public override void Configure()
     {
-        Delete("/smartreminders/{id}");
+        Delete("/smartreminders/{@id}");
         AllowAnonymous();
     }
 

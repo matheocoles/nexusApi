@@ -13,7 +13,7 @@ public class DeleteAchievementEndpoint(NexusDbContext db) : Endpoint<DeleteAchie
 {
     public override void Configure()
     {
-        Delete("/achievements/{id}", x => new { x.Id });
+        Delete("/achievements/{@id}", x => new { x.Id });
         AllowAnonymous();
     }
 
