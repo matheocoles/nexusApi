@@ -1,8 +1,7 @@
-namespace NexusAPI.DTO.Lesson.Request;
+namespace NexusAPI.DTO.Class.Request;
 
-public class UpdateLessonDto
+public class CreateClassDto
 {
-    public int Id { get; set; }
     public string? Name { get; set; }
     public string? Description { get; set; }
     public string? Subject { get; set; }

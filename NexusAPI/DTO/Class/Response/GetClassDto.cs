@@ -1,6 +1,6 @@
-namespace NexusAPI.DTO.Lesson.Response;
+namespace NexusAPI.DTO.Class.Response;
 
-public class GetLessonDto
+public class GetClassDto
 {
     public int Id { get; set; }
     public string? Name { get; set; }
