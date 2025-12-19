@@ -27,7 +27,7 @@ public class GetSessionEndpoint(NexusDbContext db)
 
         if (session == null)
         {
-            Console.WriteLine("Aucun matériel avec l'ID {req.Id} trouvé.");
+            Console.WriteLine("Aucune session avec l'ID {req.Id} trouvé.");
             await Send.NotFoundAsync(ct);
             return;
         }
