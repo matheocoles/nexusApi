@@ -1,4 +1,6 @@
-﻿namespace NexusAPI.DTO.Session.Response;
+﻿using NexusAPI.DTO.Achievement.Response;
+
+namespace NexusAPI.DTO.Session.Response;
 
 public class GetSessionDto
 {
@@ -6,5 +8,7 @@ public class GetSessionDto
     public DateOnly? DateTimeStart { get; set; }
     public DateOnly? DateTimeEnd { get; set; }
     public string? Status { get; set; }
+    
+    public List<GetAchievementDto> Achievements { get; set; } = new();
     
 }

@@ -1,7 +1,8 @@
 ﻿using NexusAPI.DTO.Session.Response;
+using NexusAPI.DTO.Achievement.Response;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
-
+using NexusAPI.Models;
 
 namespace NexusAPI.Endpoints.Session;
 
@@ -15,31 +16,45 @@ public class GetSessionEndpoint(NexusDbContext db)
 {
     public override void Configure()
     {
-    Get("/sessions/{@id}", x => new { x.Id });
-    AllowAnonymous();
+        Get("/sessions/{@id}", x => new { x.Id });
+        AllowAnonymous();
     }
 
     public override async Task HandleAsync(GetSessionRequest req, CancellationToken ct)
     {
-        Models.Session? session = await db
-            .Sessions
-            .SingleOrDefaultAsync(x => x.Id == req.Id, cancellationToken: ct);
+        // Charger la session avec ses achievements
+        var session = await db.Sessions
+            .Include(s => s.SessionAchievements)       // charger la table de liaison
+            .ThenInclude(sa => sa.Achievement)     // charger les achievements
+            .SingleOrDefaultAsync(s => s.Id == req.Id, ct);
 
         if (session == null)
         {
-            Console.WriteLine("Aucune session avec l'ID {req.Id} trouvé.");
+            Console.WriteLine($"Aucune session avec l'ID {req.Id} trouvée.");
             await Send.NotFoundAsync(ct);
             return;
         }
 
-        GetSessionDto responseDto = new()
+        // Préparer la liste des achievements pour le DTO
+        var achievements = session.SessionAchievements
+            .Select(sa => new GetAchievementDto
+            {
+                Id = sa.Achievement.Id,
+                Name = sa.Achievement.Name,
+                Description = sa.Achievement.Description
+            })
+            .ToList();
+
+        // Construire le DTO de réponse
+        var responseDto = new GetSessionDto
         {
             Id = session.Id,
             DateTimeStart = session.DateTimeStart,
             DateTimeEnd = session.DateTimeEnd,
-            Status = session.Status
+            Status = session.Status,
+            Achievements = achievements
         };
-        await Send.OkAsync(responseDto, ct);
 
+        await Send.OkAsync(responseDto, ct);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using NexusAPI.DTO.Session.Response;
+using NexusAPI.DTO.Achievement.Response;
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,14 +17,24 @@ public class GetAllSessionEndpoint(NexusDbContext db)
     public override async Task HandleAsync(CancellationToken ct)
     {
         var responseDto = await db.Sessions
-            .Select(a => new GetSessionDto
+            .Include(s => s.SessionAchievements)
+            .ThenInclude(sa => sa.Achievement)
+            .Select(s => new GetSessionDto
             {
-                Id = a.Id,
-                DateTimeStart = a.DateTimeStart,
-                DateTimeEnd = a.DateTimeEnd,
-                Status = a.Status
+                Id = s.Id,
+                DateTimeStart = s.DateTimeStart,
+                DateTimeEnd = s.DateTimeEnd,
+                Status = s.Status,
+                Achievements = s.SessionAchievements
+                    .Select(sa => new GetAchievementDto
+                    {
+                        Id = sa.Achievement.Id,
+                        Name = sa.Achievement.Name,
+                        Description = sa.Achievement.Description
+                    })
+                    .ToList()
             })
-            .ToListAsync(ct);
+            .ToListAsync<GetSessionDto>(ct);
 
         await Send.OkAsync(responseDto, ct);
     }

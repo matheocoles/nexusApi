@@ -19,21 +19,29 @@ public class DeleteSessionEndpoint(NexusDbContext db) : Endpoint<DeleteSessionRe
 
     public override async Task HandleAsync(DeleteSessionRequest req, CancellationToken ct)
     {
+        // Récupérer la session avec ses liaisons
         var sessionToDelete = await db.Sessions
-            .SingleOrDefaultAsync(p => p.Id == req.Id, ct);
-    
-    if (sessionToDelete is null)
-    {
-        Console.WriteLine($"Aucun session avec l'ID {req.Id} trouvé.");
-        await Send.NotFoundAsync(ct);
-        return;
-    }
-    
-    db.Sessions.Remove(sessionToDelete);
+            .Include(s => s.SessionAchievements)
+            .SingleOrDefaultAsync(s => s.Id == req.Id, ct);
 
-    await db.SaveChangesAsync(ct);
-    Console.WriteLine($"Session {req.Id}a été supprimé avec succès.");
+        if (sessionToDelete is null)
+        {
+            Console.WriteLine($"Aucune session avec l'ID {req.Id} trouvée.");
+            await Send.NotFoundAsync(ct);
+            return;
+        }
 
-    await Send.NoContentAsync(ct);
+        // Supprimer toutes les liaisons avec les achievements
+        if (sessionToDelete.SessionAchievements.Any())
+        {
+            db.SessionAchievements.RemoveRange(sessionToDelete.SessionAchievements);
+        }
+
+        // Supprimer la session
+        db.Sessions.Remove(sessionToDelete);
+        await db.SaveChangesAsync(ct);
+
+        Console.WriteLine($"Session {req.Id} a été supprimée avec succès.");
+        await Send.NoContentAsync(ct);
     }
 }

@@ -14,8 +14,6 @@ public class Session
     [Required] public int EventRecurrenceId { get; set; }
     [Required] public EventRecurrence? EventRecurrence { get; set; }
     
-    public List<SmartReminder>? SmartReminders { get; set; }
-    
-    
+    public List<SessionAchievement> SessionAchievements { get; set; } = new();
     
 }
