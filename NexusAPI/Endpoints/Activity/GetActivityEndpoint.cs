@@ -1,25 +1,21 @@
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
-using NexusAPI;
 using NexusAPI.DTO.Activity.Response;
-using NexusAPI.Models;
 
-public class GetActivityRequest
-{
-    public int Id { get; set; }
-}
+namespace NexusAPI.Endpoints.Activity;
 
-public class GetActivityEndpoint(NexusDbContext nexusDbContext) :Endpoint<GetActivityRequest, GetActivityDto>
+public class GetActivityEndpoint(NexusDbContext nexusDbContext) :Endpoint<GetActivityDto>
 {
     public override void Configure()
     {
         Get("/activity/{@id}", x => new { x.Id });
+        AllowAnonymous();
     }
 
-    public override async Task HandleAsync(GetActivityRequest req, CancellationToken ct)
+    public override async Task HandleAsync(GetActivityDto req, CancellationToken ct)
     {
         
-        Activity? activity = await nexusDbContext
+        Models.Activity? activity = await nexusDbContext
             .Activities
             .SingleOrDefaultAsync(a => a.Id == req.Id, cancellationToken: ct);
 
@@ -33,7 +29,8 @@ public class GetActivityEndpoint(NexusDbContext nexusDbContext) :Endpoint<GetAct
         GetActivityDto responseDto = new()
         {
             Id = req.Id, 
-            Name = activity.Name
+            Name = activity.Name,
+            Description = activity.Description,
         };
 
         await Send.OkAsync(responseDto, ct);
