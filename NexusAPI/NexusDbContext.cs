@@ -33,4 +33,17 @@ public class NexusDbContext : DbContext
             .WithMany(a => a.SessionAchievements)
             .HasForeignKey(sa => sa.AchievementId);
     }
+    
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        string connectionString =
+            "Server=romaric-thibault.fr;" + 
+            "Database=nexus;" + 
+            "User Id=nexus;" +
+            "Password=nexus;" +
+            "TrustServerCertificate=true;";
+
+        optionsBuilder.UseSqlServer(connectionString);
+    }
+
 }
