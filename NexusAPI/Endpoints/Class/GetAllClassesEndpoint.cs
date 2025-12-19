@@ -1,23 +1,22 @@
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
-using NexusAPI.DTO.Activity.Response;
-using NexusAPI.DTO.Lesson.Response;
+using NexusAPI.DTO.Class.Response;
 
-namespace NexusAPI.Endpoints.Lesson;
+namespace NexusAPI.Endpoints.Class;
 
-public class GetAllLessonsEndpoint(NexusDbContext nexusDbContext) : EndpointWithoutRequest<List<GetLessonDto>>
+public class GetAllClassesEndpoint(NexusDbContext nexusDbContext) : EndpointWithoutRequest<List<GetClassDto>>
 {
     public override void Configure()
     {
-        Get("/lesson");
+        Get("/class");
         AllowAnonymous();
     }
 
     public override async Task HandleAsync(CancellationToken ct)
     {
         
-        List<GetLessonDto> responseDto = await nexusDbContext.Lessons
-            .Select(a => new GetLessonDto()
+        List<GetClassDto> responseDto = await nexusDbContext.Classes
+            .Select(a => new GetClassDto()
                 {
                     Id = a.Id,
                     Name = a.Name,

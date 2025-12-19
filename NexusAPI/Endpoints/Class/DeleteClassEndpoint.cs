@@ -1,36 +1,36 @@
 using FastEndpoints;
 using Microsoft.EntityFrameworkCore;
 
-namespace NexusAPI.Endpoints.Lesson;
+namespace NexusAPI.Endpoints.Class;
 
-public class DeleteLessonRequest
+public class DeleteClassRequest
 {
     public int Id { get; set; }
 }
 
-public class DeleteLessonEndpoint(NexusDbContext nexusDbContext) : Endpoint<DeleteLessonRequest>
+public class DeleteClassEndpoint(NexusDbContext nexusDbContext) : Endpoint<DeleteClassRequest>
 {
     public override void Configure()
     {
-        Delete("/lesson/{@id}", x => new { x.Id });
+        Delete("/class/{@id}", x => new { x.Id });
         AllowAnonymous();
     }
     
-    public override async Task HandleAsync(DeleteLessonRequest req, CancellationToken ct)
+    public override async Task HandleAsync(DeleteClassRequest req, CancellationToken ct)
     {
         
-        Models.Lesson? lessonToDelete = await nexusDbContext
-            .Lessons
+        Models.Class? @classToDelete = await nexusDbContext
+            .Classes
             .SingleOrDefaultAsync(a => a.Id == req.Id, cancellationToken: ct);
 
-        if (lessonToDelete == null)
+        if (@classToDelete == null)
         {
             Console.WriteLine($"Aucun cours avec l'ID {req.Id} trouvé.");
             await Send.NotFoundAsync(ct);
             return;
         }
 
-        nexusDbContext.Activities.Remove(lessonToDelete);
+        nexusDbContext.Classes.Remove(classToDelete);
         await nexusDbContext.SaveChangesAsync(ct);
 
         await Send.NoContentAsync(ct);

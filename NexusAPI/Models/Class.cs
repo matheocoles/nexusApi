@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NexusAPI.Models;
 
-public class Lesson : Activity
+public class Class : Activity
 {
     [Required] public string? Subject { get; set; }
     [Required] public string? Teacher { get; set; }
