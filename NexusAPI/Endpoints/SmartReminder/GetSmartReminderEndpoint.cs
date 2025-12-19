@@ -10,7 +10,7 @@ public class GetSmartReminderRequest
     public int Id { get; set; }
 }
 
-public class GetSessionEndpoint(NexusDbContext db)
+public class GetSmartReminderEndpoint(NexusDbContext db)
     : Endpoint<GetSmartReminderRequest, GetSmartReminderDto>
 {
     public override void Configure()
