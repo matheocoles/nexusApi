@@ -12,7 +12,7 @@ public class DeleteEventRecurrenceEndpoint(NexusDbContext nexusDbContext) : Endp
 {
     public override void Configure()
     {
-        Delete("/eventrecurrence/{@id}", x => new { x.Id });
+        Delete("/eventrecurrences/{@id}", x => new { x.Id });
         AllowAnonymous();
     }
     

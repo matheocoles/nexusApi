@@ -8,7 +8,7 @@ public class UpdateEventRecurrenceEndpoint(NexusDbContext nexusDbContext) : Endp
 {
     public override void Configure()
     {
-        Put("/eventrecurrence");
+        Put("/eventrecurrences");
         AllowAnonymous();
     }
 

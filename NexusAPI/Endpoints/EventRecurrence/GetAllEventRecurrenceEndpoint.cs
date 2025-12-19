@@ -8,7 +8,7 @@ public class GetAllEventRecurrenceEndpoint(NexusDbContext nexusDbContext) : Endp
 {
     public override void Configure()
     {
-        Get("/eventrecurrence");
+        Get("/eventrecurrences");
         AllowAnonymous();
     }
 
