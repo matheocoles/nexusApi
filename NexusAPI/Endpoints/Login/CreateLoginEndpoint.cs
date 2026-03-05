@@ -11,7 +11,8 @@ public class CreateLoginEndpoint(NexusDbContext database) : Endpoint<CreateLogin
     public override void Configure()
     {
         Post("/logins");
-        Roles("Admin");
+        //Roles("Admin");
+        AllowAnonymous();
     }
 
     public override async Task HandleAsync(CreateLoginDto req, CancellationToken ct)

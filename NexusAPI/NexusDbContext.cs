@@ -13,15 +13,19 @@ public class NexusDbContext : DbContext
     public DbSet<Session> Sessions { get; set; }
     public DbSet<SmartReminder> SmartReminders { get; set; }
     public DbSet<Sport> Sports { get; set; }
-    public DbSet<SessionAchievement> SessionAchievements { get; set; } = null!;
+    public DbSet<SessionAchievement> SessionAchievements { get; set; }
     public DbSet<Login>  Logins { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
+        modelBuilder.Ignore<System.Type>();
+        modelBuilder.Ignore<System.Reflection.CustomAttributeData>();
+        
         modelBuilder.Entity<SessionAchievement>()
             .HasKey(sa => new { sa.SessionId, sa.AchievementId });
+        
 
         modelBuilder.Entity<SessionAchievement>()
             .HasOne(sa => sa.Session)
