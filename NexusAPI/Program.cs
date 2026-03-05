@@ -45,4 +45,6 @@ app.UseFastEndpoints(options =>
     options.Endpoints.ShortNames = true;
 }).UseSwaggerGen();
 
+app.MapGet("/", () => "Nexus API est en ligne !");
+
 app.Run();

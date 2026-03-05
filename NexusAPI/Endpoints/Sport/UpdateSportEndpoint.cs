@@ -8,7 +8,7 @@ public class UpdateSportEndpoint(NexusDbContext nexusDbContext) : Endpoint<Updat
 {
     public override void Configure()
     {
-        Put("/spory");
+        Put("/sport");
         AllowAnonymous();
     }
 

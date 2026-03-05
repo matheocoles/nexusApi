@@ -1,0 +1,18 @@
+{
+  "builds": [
+    {
+      "src": "api/NexusAPI.csproj",
+      "use": "vercel-dotnet"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "api/$1"
+    }
+  ]
+}
