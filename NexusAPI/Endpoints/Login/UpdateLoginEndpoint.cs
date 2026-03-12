@@ -10,7 +10,7 @@ public class UpdateLoginEndpoint(NexusDbContext database) : Endpoint<UpdateLogin
 {
     public override void Configure()
     {
-        Put("/api/Login/{Id}"); 
+        Put("/api/logins/{Id}"); 
         AllowAnonymous();
     }
 
