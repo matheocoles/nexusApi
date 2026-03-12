@@ -10,7 +10,7 @@ public class UserLoginEndpoint(NexusDbContext database) : Endpoint<ConnectLoginD
 {
     public override void Configure()
     {
-        Post("/login");
+        Post("/api/login");
         AllowAnonymous();
     }
 
