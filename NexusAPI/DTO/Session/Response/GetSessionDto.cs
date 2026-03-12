@@ -9,6 +9,9 @@ public class GetSessionDto
     public DateOnly? DateTimeEnd { get; set; }
     public string? Status { get; set; }
     
+    public string? ActivityName { get; set; }
+
+    
     public List<GetAchievementDto> Achievements { get; set; } = new();
     
 }

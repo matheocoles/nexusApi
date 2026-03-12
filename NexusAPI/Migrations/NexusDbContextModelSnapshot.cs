@@ -145,29 +145,36 @@ namespace NexusAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ActivityId")
+                    b.Property<int?>("ClassId")
                         .HasColumnType("int");
 
                     b.Property<DateOnly?>("DateTimeEnd")
-                        .IsRequired()
                         .HasColumnType("date");
 
                     b.Property<DateOnly?>("DateTimeStart")
-                        .IsRequired()
                         .HasColumnType("date");
 
-                    b.Property<int>("EventRecurrenceId")
+                    b.Property<int?>("EventRecurrenceId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ExtraActivityId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SportId")
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ActivityId");
+                    b.HasIndex("ClassId");
 
                     b.HasIndex("EventRecurrenceId");
+
+                    b.HasIndex("ExtraActivityId");
+
+                    b.HasIndex("SportId");
 
                     b.ToTable("Sessions");
                 });
@@ -300,21 +307,27 @@ namespace NexusAPI.Migrations
 
             modelBuilder.Entity("NexusAPI.Models.Session", b =>
                 {
-                    b.HasOne("NexusAPI.Models.Activity", "Activity")
+                    b.HasOne("NexusAPI.Models.Class", "Class")
                         .WithMany()
-                        .HasForeignKey("ActivityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ClassId");
 
-                    b.HasOne("NexusAPI.Models.EventRecurrence", "EventRecurrence")
+                    b.HasOne("NexusAPI.Models.EventRecurrence", null)
                         .WithMany("Sessions")
-                        .HasForeignKey("EventRecurrenceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("EventRecurrenceId");
 
-                    b.Navigation("Activity");
+                    b.HasOne("NexusAPI.Models.ExtraActivity", "ExtraActivity")
+                        .WithMany()
+                        .HasForeignKey("ExtraActivityId");
 
-                    b.Navigation("EventRecurrence");
+                    b.HasOne("NexusAPI.Models.Sport", "Sport")
+                        .WithMany()
+                        .HasForeignKey("SportId");
+
+                    b.Navigation("Class");
+
+                    b.Navigation("ExtraActivity");
+
+                    b.Navigation("Sport");
                 });
 
             modelBuilder.Entity("NexusAPI.Models.SessionAchievement", b =>
