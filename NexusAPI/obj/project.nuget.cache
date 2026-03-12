@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "oYkYNDiSkzk=",
+  "dgSpecHash": "vdCHMNNMTk0=",
   "success": true,
-  "projectFilePath": "/home/colesm@stsio.lan/RiderProjects/nexusApi/NexusAPI/NexusAPI.csproj",
+  "projectFilePath": "/home/colesm@stsio.lan/Documents/nexusApi/NexusAPI/NexusAPI.csproj",
   "expectedPackageFiles": [
     "/home/colesm@stsio.lan/.nuget/packages/azure.core/1.38.0/azure.core.1.38.0.nupkg.sha512",
     "/home/colesm@stsio.lan/.nuget/packages/azure.identity/1.11.4/azure.identity.1.11.4.nupkg.sha512",

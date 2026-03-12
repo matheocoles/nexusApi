@@ -4815,11 +4815,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/colesm@stsio.lan/RiderProjects/nexusApi/NexusAPI/NexusAPI.csproj",
+      "projectUniqueName": "/home/colesm@stsio.lan/Documents/nexusApi/NexusAPI/NexusAPI.csproj",
       "projectName": "NexusAPI",
-      "projectPath": "/home/colesm@stsio.lan/RiderProjects/nexusApi/NexusAPI/NexusAPI.csproj",
+      "projectPath": "/home/colesm@stsio.lan/Documents/nexusApi/NexusAPI/NexusAPI.csproj",
       "packagesPath": "/home/colesm@stsio.lan/.nuget/packages/",
-      "outputPath": "/home/colesm@stsio.lan/RiderProjects/nexusApi/NexusAPI/obj/",
+      "outputPath": "/home/colesm@stsio.lan/Documents/nexusApi/NexusAPI/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/colesm@stsio.lan/.nuget/NuGet/NuGet.Config"
