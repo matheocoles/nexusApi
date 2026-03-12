@@ -14,10 +14,9 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddCors(options =>
     options.AddDefaultPolicy(policyBuilder =>
-        policyBuilder.WithOrigins("http://localhost:4200")
+        policyBuilder.AllowAnyOrigin()
             .WithMethods("GET", "POST", "PUT", "PATCH", "DELETE")
             .AllowAnyHeader()
-            .AllowCredentials() 
     )
 );
 
@@ -41,7 +40,7 @@ app.UseAuthorization();
 
 app.UseFastEndpoints(options =>
 {
-    options.Endpoints.RoutePrefix = "API"; 
+    options.Endpoints.RoutePrefix = "api"; 
     options.Endpoints.ShortNames = true;
 }).UseSwaggerGen();
 
