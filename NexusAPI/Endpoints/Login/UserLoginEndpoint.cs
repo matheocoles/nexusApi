@@ -34,7 +34,8 @@ public class UserLoginEndpoint(NexusDbContext database) : Endpoint<ConnectLoginD
                     if (login.Role != null) o.User.Roles.Add(login.Role);
                     o.User.Claims.Add(("Username", login.Username)!);
                     o.User.Claims.Add(("FullName", login.FullName)!);
-                    o.User["UserId"] = "001";
+                    o.User["UserId"] = login.Id.ToString("D3");
+                    
                 });
 
             GetLoginConnectDto responseDto = new()
