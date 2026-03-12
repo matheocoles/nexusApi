@@ -10,7 +10,7 @@ public class UpdateLoginEndpoint(NexusDbContext database) : Endpoint<UpdateLogin
 {
     public override void Configure()
     {
-        Put("/api/logins/{Id}"); 
+        Put("/api/logins/{id}"); 
         AllowAnonymous();
     }
 
@@ -36,7 +36,7 @@ public class UpdateLoginEndpoint(NexusDbContext database) : Endpoint<UpdateLogin
 
         await database.SaveChangesAsync(ct);
         
-        GetLoginDto responseDto = new()
+        var responseDto = new GetLoginDto
         {
             Id = login.Id,
             Username = login.Username,
