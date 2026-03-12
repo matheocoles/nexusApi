@@ -10,13 +10,13 @@ public class UpdateLoginEndpoint(NexusDbContext database) : Endpoint<UpdateLogin
 {
     public override void Configure()
     {
-        Put("/api/logins/{id}"); 
+        Put("/logins/{@Id}", x => new {x.Id});
         AllowAnonymous();
     }
 
     public override async Task HandleAsync(UpdateLoginDto req, CancellationToken ct)
     {
-        var login = await database.Logins.SingleOrDefaultAsync(x => x.Id == req.Id, ct);
+        Models.Login? login = await database.Logins.SingleOrDefaultAsync(x => x.Id == req.Id, ct);
 
         if (login == null)
         {
@@ -24,19 +24,15 @@ public class UpdateLoginEndpoint(NexusDbContext database) : Endpoint<UpdateLogin
             return;
         }
 
+        string? salt = new Password().IncludeLowercase().IncludeUppercase().IncludeNumeric().LengthRequired(24).Next();
+        
         login.Username = req.Username;
         login.FullName = req.FullName;
-
-        if (!string.IsNullOrEmpty(req.Password))
-        {
-            string salt = new Password().IncludeLowercase().IncludeUppercase().IncludeNumeric().LengthRequired(24).Next();
-            login.Salt = salt;
-            login.Password = BCrypt.Net.BCrypt.HashPassword(req.Password + salt);
-        }
-
+        login.Password = BCrypt.Net.BCrypt.HashPassword(req.Password + salt);
+        login.Salt = salt;
         await database.SaveChangesAsync(ct);
         
-        var responseDto = new GetLoginDto
+        GetLoginDto responseDto = new()
         {
             Id = login.Id,
             Username = login.Username,
