@@ -12,7 +12,7 @@ public class CreateSessionEndpoint(NexusDbContext db)
 {
     public override void Configure()
     {
-        Post("/api/sessions");
+        Post("/sessions");
         AllowAnonymous();
     }
 
