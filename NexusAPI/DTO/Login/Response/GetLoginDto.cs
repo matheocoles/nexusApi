@@ -1,10 +1,7 @@
-using FastEndpoints;
-
 namespace NexusAPI.DTO.Login.Response;
 
 public class GetLoginDto
 {
-    [BindFrom("id")]
     public int Id { get; set; }
     public string? Username { get; set; }
     public string? FullName { get; set; }

@@ -6,7 +6,7 @@ namespace NexusAPI.Endpoints.Login;
 
 public class GetLoginRequest
 {
-    public int Id { get; set; }
+    public int id { get; set; }
 }
 
 public class GetLoginEndpoint(NexusDbContext database) : Endpoint<GetLoginRequest, GetLoginDto>
@@ -20,7 +20,7 @@ public class GetLoginEndpoint(NexusDbContext database) : Endpoint<GetLoginReques
     public override async Task HandleAsync(GetLoginRequest req, CancellationToken ct)
     {
         Models.Login? login = await database.Logins
-            .SingleOrDefaultAsync(x => x.Id == req.Id, ct);
+            .SingleOrDefaultAsync(x => x.Id == req.id, ct);
 
         if (login == null)
         {
