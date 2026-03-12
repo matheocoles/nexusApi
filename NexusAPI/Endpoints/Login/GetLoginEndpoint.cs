@@ -13,7 +13,7 @@ public class GetLoginEndpoint(NexusDbContext database) : Endpoint<GetLoginReques
 {
     public override void Configure()
     {
-        Get("/logins/{Id}", x => new {x.Id});
+        Get("/logins/{Id}");
         AllowAnonymous();
     }
 
