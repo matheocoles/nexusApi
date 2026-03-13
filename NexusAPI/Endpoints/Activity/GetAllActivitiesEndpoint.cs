@@ -14,17 +14,33 @@ public class GetAllActivitiesEndpoint(NexusDbContext nexusDbContext) : EndpointW
 
     public override async Task HandleAsync(CancellationToken ct)
     {
+        var activities = await nexusDbContext.Activities.ToListAsync(ct);
+
+        var responseDto = activities.Select(a => new GetActivityDto
+        {
+            Id = a.Id,
+            Name = a.Name,
+            Description = a.Description,
+            StartTime = a.DateTimeStart, 
+            EndTime = a.DateTimeEnd,
         
-        List<GetActivityDto> responseDto = await nexusDbContext.Activities
-            .Select(a => new GetActivityDto()
-                {
-                    Id = a.Id,
-                    Name = a.Name,
-                    Description = a.Description,
-                }
-            ).ToListAsync(ct);
+            Room = a switch
+            {
+                NexusAPI.Models.Class c => c.Room,
+                NexusAPI.Models.Sport s => s.Place,
+                NexusAPI.Models.ExtraActivity e => e.Place,
+                _ => "Nexus Zone"
+            },
 
-        await Send.OkAsync(responseDto, ct);
+            TypeLabel = a switch
+            {
+                NexusAPI.Models.Class _ => "Cours",
+                NexusAPI.Models.Sport _ => "Sport",
+                NexusAPI.Models.ExtraActivity _ => "Extra",
+                _ => "Activité"
+            }
+        }).ToList();
+
+        await Send.OkAsync(responseDto, cancellation: ct);
     }
-
 }

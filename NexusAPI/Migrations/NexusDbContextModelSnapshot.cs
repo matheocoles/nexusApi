@@ -54,6 +54,12 @@ namespace NexusAPI.Migrations
                     b.Property<int?>("ActivityId")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("DateTimeEnd")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateTimeStart")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
