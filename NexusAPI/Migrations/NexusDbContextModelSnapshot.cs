@@ -96,10 +96,23 @@ namespace NexusAPI.Migrations
                         .IsRequired()
                         .HasColumnType("date");
 
-                    b.Property<int>("Day")
+                    b.Property<DateOnly?>("DateStart")
+                        .IsRequired()
+                        .HasColumnType("date");
+
+                    b.Property<int?>("Day")
                         .HasColumnType("int");
 
+                    b.Property<TimeOnly>("EndTime")
+                        .HasColumnType("time");
+
                     b.Property<int>("Frequency")
+                        .HasColumnType("int");
+
+                    b.Property<TimeOnly>("StartTime")
+                        .HasColumnType("time");
+
+                    b.Property<int>("Type")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -154,11 +167,11 @@ namespace NexusAPI.Migrations
                     b.Property<int?>("ClassId")
                         .HasColumnType("int");
 
-                    b.Property<DateOnly?>("DateTimeEnd")
-                        .HasColumnType("date");
+                    b.Property<DateTime?>("DateTimeEnd")
+                        .HasColumnType("datetime2");
 
-                    b.Property<DateOnly?>("DateTimeStart")
-                        .HasColumnType("date");
+                    b.Property<DateTime?>("DateTimeStart")
+                        .HasColumnType("datetime2");
 
                     b.Property<int?>("EventRecurrenceId")
                         .HasColumnType("int");

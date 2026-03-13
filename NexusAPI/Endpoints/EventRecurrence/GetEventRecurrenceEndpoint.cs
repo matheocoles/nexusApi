@@ -33,6 +33,7 @@ public class GetEventRecurrenceEndpoint(NexusDbContext db)
         {
             Id = eventRecurrence.Id,
             Type = eventRecurrence.Type, 
+            Title =  eventRecurrence.Title,
             Frequency = eventRecurrence.Frequency,
             DateStart =  eventRecurrence.DateStart,
             DateEnd = eventRecurrence.DateEnd,

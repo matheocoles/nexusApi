@@ -7,6 +7,8 @@ public class UpdateEventRecurrenceDto
     public int Id { get; set; }
     public RecurrenceType Type { get; set; }
     public int Frequency { get; set; }
+    public string? Title { get; set; }
+
     public DateOnly? DateStart { get; set; }
 
     public DateOnly? DateEnd { get; set; }

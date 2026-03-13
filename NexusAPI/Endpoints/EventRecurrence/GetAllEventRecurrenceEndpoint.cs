@@ -20,6 +20,7 @@ public class GetAllEventRecurrenceEndpoint(NexusDbContext nexusDbContext) : Endp
                 {
                     Id = a.Id,
                     Type = a.Type, 
+                    Title = a.Title,
                     Frequency = a.Frequency,
                     DateStart = a.DateStart,
                     DateEnd = a.DateEnd,

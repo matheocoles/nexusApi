@@ -17,6 +17,7 @@ public class UpdateEventRecurrenceEndpoint(NexusDbContext nexusDbContext) : Endp
         Models.EventRecurrence eventRecurrence = new()
         {
             Type = req.Type, 
+            Title =  req.Title,
             Frequency = req.Frequency,
             DateStart = req.DateStart,
             DateEnd = req.DateEnd,
@@ -32,6 +33,7 @@ public class UpdateEventRecurrenceEndpoint(NexusDbContext nexusDbContext) : Endp
         {
             Id = eventRecurrence.Id,
             Type = eventRecurrence.Type, 
+            Title =  eventRecurrence.Title,
             Frequency = eventRecurrence.Frequency,
             DateEnd = eventRecurrence.DateEnd,
             StartTime =  eventRecurrence.StartTime,
