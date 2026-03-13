@@ -32,11 +32,11 @@ public class CreateEventRecurrenceEndpoint(NexusDbContext db)
             Id = eventRecurrence.Id,
             Type = eventRecurrence.Type,
             Frequency = eventRecurrence.Frequency,
-            DateStart =  eventRecurrence.DateStart,
+            DateStart = eventRecurrence.DateStart,
             DateEnd = eventRecurrence.DateEnd,
             Day = eventRecurrence.Day
         };
 
-        await db.AddAsync(responseDto, ct);
+        await Send.OkAsync(responseDto, cancellation: ct);
     }
 }
