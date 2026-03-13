@@ -18,6 +18,7 @@ public class UpdateEventRecurrenceEndpoint(NexusDbContext nexusDbContext) : Endp
         {
             Type = req.Type,
             Frequency = req.Frequency,
+            DateStart = req.DateStart,
             DateEnd = req.DateEnd,
             Day = req.Day
         };
