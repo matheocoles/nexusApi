@@ -1,9 +1,11 @@
-﻿namespace NexusAPI.DTO.EventRecurrence.Request;
+﻿using NexusAPI.Models.Enums;
+
+namespace NexusAPI.DTO.EventRecurrence.Request;
 
 public class UpdateEventRecurrenceDto
 {
     public int Id { get; set; }
-    public Type Type { get; set; }
+    public RecurrenceType Type { get; set; }
     public int Frequency { get; set; }
     public DateOnly? DateStart { get; set; }
 

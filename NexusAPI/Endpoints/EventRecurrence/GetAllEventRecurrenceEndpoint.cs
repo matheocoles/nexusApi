@@ -19,7 +19,7 @@ public class GetAllEventRecurrenceEndpoint(NexusDbContext nexusDbContext) : Endp
             .Select(a => new GetEventRecurrenceDto()
                 {
                     Id = a.Id,
-                    Type = a.Type.ToString(), 
+                    Type = a.Type, 
                     Frequency = a.Frequency,
                     DateStart = a.DateStart,
                     DateEnd = a.DateEnd,

@@ -29,7 +29,7 @@ public class UpdateEventRecurrenceEndpoint(NexusDbContext nexusDbContext) : Endp
         GetEventRecurrenceDto response = new()
         {
             Id = eventRecurrence.Id,
-            Type = eventRecurrence.Type.ToString(), 
+            Type = eventRecurrence.Type, 
             Frequency = eventRecurrence.Frequency,
             DateEnd = eventRecurrence.DateEnd,
             Day = eventRecurrence.Day
