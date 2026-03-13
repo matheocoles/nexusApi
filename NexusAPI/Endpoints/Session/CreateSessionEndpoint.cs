@@ -17,55 +17,57 @@ public class CreateSessionEndpoint(NexusDbContext db)
     }
 
     public override async Task HandleAsync(CreateSessionDto req, CancellationToken ct)
+{
+    var session = new Models.Session()
     {
-        var session = new Models.Session()
-        {
-            DateTimeStart = req.DateTimeStart,
-            DateTimeEnd = req.DateTimeEnd,
-            Status = req.Status,
-            ClassId = req.ClassId,
-            SportId = req.SportId,
-            ExtraActivityId = req.ExtraActivityId
-        };
+        DateTimeStart = req.DateTimeStart,
+        DateTimeEnd = req.DateTimeEnd,
+        Status = req.Status,
+        LoginId = req.LoginId,
+        ClassId = req.ClassId,
+        SportId = req.SportId,
+        ExtraActivityId = req.ExtraActivityId
+    };
 
-        db.Sessions.Add(session);
+    db.Sessions.Add(session);
+    await db.SaveChangesAsync(ct);
+
+    if (req.AchievementIds != null && req.AchievementIds.Any())
+    {
+        var sessionAchievements = req.AchievementIds.Select(id => new SessionAchievement 
+        { 
+            SessionId = session.Id, 
+            AchievementId = id 
+        });
+
+        await db.SessionAchievements.AddRangeAsync(sessionAchievements, ct);
         await db.SaveChangesAsync(ct);
-
-        if (req.AchievementIds != null && req.AchievementIds.Any())
-        {
-            var sessionAchievements = req.AchievementIds.Select(id => new SessionAchievement 
-            { 
-                SessionId = session.Id, 
-                AchievementId = id 
-            });
-
-            await db.SessionAchievements.AddRangeAsync(sessionAchievements, ct);
-            await db.SaveChangesAsync(ct);
-        }
-
-        var response = new GetSessionDto
-        {
-            Id = session.Id,
-            DateTimeStart = session.DateTimeStart,
-            DateTimeEnd = session.DateTimeEnd,
-            Status = session.Status,
-            ActivityName = await GetActivityName(session, ct) 
-        };
-
-        await Send.OkAsync(response, ct);
     }
 
-    private async Task<string> GetActivityName(Models.Session s, CancellationToken ct)
+    var response = new GetSessionDto
     {
-        if (s.ClassId.HasValue) 
-            return (await db.Classes.FirstOrDefaultAsync(c => c.Id == s.ClassId, ct))?.Name ?? "Cours inconnu";
-            
-        if (s.SportId.HasValue) 
-            return (await db.Sports.FirstOrDefaultAsync(sp => sp.Id == s.SportId, ct))?.Name ?? "Sport inconnu";
-            
-        if (s.ExtraActivityId.HasValue) 
-            return (await db.ExtraActivities.FirstOrDefaultAsync(e => e.Id == s.ExtraActivityId, ct))?.Name ?? "Activité inconnue";
+        Id = session.Id,
+        DateTimeStart = session.DateTimeStart,
+        DateTimeEnd = session.DateTimeEnd,
+        Status = session.Status,
+        ActivityName = await GetActivityName(session, ct) 
+    };
 
-        return "Session Libre";
-    }
+    await Send.OkAsync(response, ct);
+}
+
+private async Task<string> GetActivityName(Models.Session s, CancellationToken ct)
+{
+    if (s.ClassId.HasValue) 
+        return (await db.Classes.AsNoTracking().FirstOrDefaultAsync(c => c.Id == s.ClassId, ct))?.Name ?? "Cours inconnu";
+            
+    if (s.SportId.HasValue) 
+        return (await db.Sports.AsNoTracking().FirstOrDefaultAsync(sp => sp.Id == s.SportId, ct))?.Name ?? "Sport inconnu";
+            
+    if (s.ExtraActivityId.HasValue) 
+        return (await db.ExtraActivities.AsNoTracking().FirstOrDefaultAsync(e => e.Id == s.ExtraActivityId, ct))?.Name ?? "Activité inconnue";
+
+    return s.Status ?? "Session Libre";
+}
+
 }

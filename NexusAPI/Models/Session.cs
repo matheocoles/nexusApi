@@ -6,6 +6,8 @@ public class Session
     public DateOnly? DateTimeStart { get; set; }
     public DateOnly? DateTimeEnd { get; set; }
     public string? Status { get; set; }
+    
+    public int LoginId { get; set; }
 
     public int? ClassId { get; set; }
     public Class? Class { get; set; }

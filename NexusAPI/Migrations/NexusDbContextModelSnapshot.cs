@@ -166,6 +166,9 @@ namespace NexusAPI.Migrations
                     b.Property<int?>("ExtraActivityId")
                         .HasColumnType("int");
 
+                    b.Property<int>("LoginId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("SportId")
                         .HasColumnType("int");
 
