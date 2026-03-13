@@ -21,6 +21,8 @@ public class CreateEventRecurrenceEndpoint(NexusDbContext db)
             Frequency = req.Frequency,
             DateStart = req.DateStart,
             DateEnd = req.DateEnd,
+            StartTime = req.StartTime,
+            EndTime = req.EndTime,
             Day = req.Day
         };
 
@@ -34,6 +36,8 @@ public class CreateEventRecurrenceEndpoint(NexusDbContext db)
             Frequency = eventRecurrence.Frequency,
             DateStart = eventRecurrence.DateStart,
             DateEnd = eventRecurrence.DateEnd,
+            StartTime = eventRecurrence.StartTime,
+            EndTime = eventRecurrence.EndTime,
             Day = eventRecurrence.Day
         };
 

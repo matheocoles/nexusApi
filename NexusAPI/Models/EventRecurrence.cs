@@ -10,7 +10,10 @@ public class EventRecurrence
     [Required] public int Frequency { get; set; }
     [Required] public DateOnly? DateStart { get; set; }
     [Required] public DateOnly? DateEnd { get; set; }
-    public DayOfWeek? Day { get; set; }
     
+     public TimeOnly StartTime { get; set; }
+     public TimeOnly EndTime { get; set; }
+
+    public DayOfWeek? Day { get; set; }
     public List<Session>? Sessions { get; set; }
 }

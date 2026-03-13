@@ -23,6 +23,8 @@ public class GetAllEventRecurrenceEndpoint(NexusDbContext nexusDbContext) : Endp
                     Frequency = a.Frequency,
                     DateStart = a.DateStart,
                     DateEnd = a.DateEnd,
+                    StartTime = a.StartTime,
+                    EndTime = a.EndTime,
                     Day = a.Day
                 }
             ).ToListAsync(ct);
